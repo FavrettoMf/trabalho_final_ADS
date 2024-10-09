@@ -109,6 +109,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/dashboard') }}">Início</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="https://www.youtube.com/@matheusfavretto6442" target="_blank">
                             <i class="fab fa-youtube"></i> YouTube
                         </a>
@@ -126,38 +129,26 @@
     <div class="content-container">
         <h1 class="text-center mb-4">GERENCIAMENTO AUTOMOTIVO</h1>
         <div class="row justify-content-center">
-            <!-- Card 1: Lista de Clientes -->
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <!-- Card 1: Veículos -->
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
-                    <img src="https://blog.usadosbr.com/wp-content/uploads/2016/06/oficina_mecanica_2.jpg.jpeg" class="card-img-top" alt="Imagem do cartão">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDKBtVvctXpMQwC01dwlZcsU0QCb1g7dyd5A&s" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
-                        <h5 class="card-title">Lista de clientes</h5>
-                        <a href="{{ url('/clientes') }}" class="btn btn-primary">ACESSAR</a>
+                        <h5 class="card-title">Lista de veiculos</h5>
+                        <a href="{{ url('/veiculos') }}" class="btn btn-primary">ACESSAR</a>
                     </div>
                 </div>
             </div>
-            <!-- Card 2: Lista de Serviços -->
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <!-- Card 2: Serviços -->
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
-                    <img src="https://www.jrcastro.com.br/mecanica/imagens/oficina-mecanica-mais-proxima.jpg" class="card-img-top" alt="Imagem do cartão">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOQVr885BGjm9YYHlEilsoS2Zp7kHrtykLvg&s" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
-                        <h5 class="card-title">Lista de serviço</h5>
+                        <h5 class="card-title">Lista de serviços oferecidos</h5>
                         <a href="{{ url('/servicos') }}" class="btn btn-primary">ACESSAR</a>
                     </div>
                 </div>
             </div>
-            <!-- Card 3: Gerenciar Veículos e Serviços -->
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
-                <div class="card text-center">
-                    <img src="https://play-lh.googleusercontent.com/zAboa4aVE6Ix_c8Lae_5SfY-eI3dpOdJnj8amk-HyRFjnCDSaBRCJCOmySeteE4fAyg" class="card-img-top" alt="Imagem do cartão">
-                    <div class="card-body">
-                        <h5 class="card-title">Gerenciamento</h5>
-                        <a href="{{ url('/dashboardGer') }}" class="btn btn-primary">ACESSAR</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 4: Segunda Dashboard -->
-          
         </div>
     </div>
 
