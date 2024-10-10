@@ -164,7 +164,7 @@
     <!-- Certificação -->
     <section class="certificacao">
         <div class="container">
-            <p>CNPJ: 22.440.102/1903-17TESTEEEEEEE</p>
+            <p>CNPJ: 22.440.102/1903-17</p>
             <p>Endereço: Bairro São José, 123 - Passo Fundo , RS- CEP 99052-900</p>
             <p>Telefone: (54) 99650-8854</p>
             <p>Email: 196187@upf.br</p>
