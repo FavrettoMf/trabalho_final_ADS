@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class tipo_servicos extends Model
 {
     use HasFactory;
-    protected $fillable = ['tipo', 'tempo_estimado', 'tempo_medio'];
+    protected $fillable = ['tipo', 'tempo_estimado', 'custo_medio'];
 }

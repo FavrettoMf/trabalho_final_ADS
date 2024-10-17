@@ -1,83 +1,120 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\servicos;
+
+use App\Models\clientes;
+use App\Models\servicos; // Certifique-se de que o nome do modelo está correto
+use App\Models\tipo_servicos;
+use App\Models\veiculos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ServicosController extends Controller
 {
-    //
     public function index()
     {
-        //usaremos a model para buscar os servicos
-        //select * from servicos order by nome asc
-        $listaServicos = DB::table('servicos')->orderBy('nome', 'asc')->get();
-        $listaServicos = json_decode($listaServicos, true);
+        // Usaremos a model para buscar os serviços
+        $listaServicos = Servicos::orderBy('nome_cliente', 'asc')->with(['veiculo', 'tipoServico'])->get();
+        $total = Servicos::count();
 
-        $total = DB::table('servicos')->count();
-        //dd($listaAlunos);
-        return view('servicos.index', ['servicos' => $listaServicos, 'total' => $total ]);
+        return view('servicos.index', ['servicos' => $listaServicos, 'total' => $total]);
     }
 
-    public function create()
-    {
-        //alguma lógica aqui
-        return view('servicos.create');
-    }
+   public function create()
+{
+    // Buscar todos os clientes e veículos
+    $clientes = clientes::all(); // Certifique-se de que o modelo está correto
+    $veiculos = veiculos::all(); // Certifique-se de que o modelo está correto
+    $tipo_servicos = tipo_servicos::all(); // Certifique-se de que o modelo está correto
+
+    return view('servicos.create', [
+        'clientes' => $clientes,
+        'veiculos' => $veiculos,
+        'tipo_servicos' => $tipo_servicos
+    ]);
+}
+
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        // Validação dos dados recebidos
         $request->validate([
-            'nome' => 'required|min:2|max:50',
+            'veiculos_id' => 'required|exists:veiculos,id',
+            'tipo_servicos_id' => 'required|exists:tipo_servicos,id',
+            'defeito' => 'required|string|max:255',
+            'placa' => 'required|string|max:10',
+            'modelo' => 'required|string|max:50',
+            'nome_cliente' => 'required|string|max:50',
+            'tipo' => 'required|string|max:50',
+            'tempo_estimado' => 'required|integer|min:0',
+            'status' => 'required|in:Em análise,Em andamento,Concluído',
         ]);
 
+        // Criação do novo serviço
         Servicos::create([
-            'nome' => $request->nome,
-            'marmod' => $request->marmod,
+            'veiculos_id' => $request->veiculos_id,
+            'tipo_servicos_id' => $request->tipo_servicos_id,
+            'defeito' => $request->defeito,
             'placa' => $request->placa,
-            'defeito' => $request->defeito
+            'modelo' => $request->modelo,
+            'nome_cliente' => $request->nome_cliente,
+            'tipo' => $request->tipo,
+            'tempo_estimado' => $request->tempo_estimado,
+            'status' => $request->status,
         ]);
         
-        return redirect('/servicos')->with('success','Servico salvo com sucesso');
-
+        return redirect('/servicos')->with('success', 'Serviço salvo com sucesso');
     }
 
     public function edit($id)
     {
-        //find é o método que faz select * from alunos where id= ?
-        $servicos = Servicos::find($id);
-        //retornamos a view passando a TUPLA de aluno consultado
+        // Busca o serviço pelo ID
+        $servicos = Servicos::findOrFail($id);
         return view('servicos.edit', ['servicos' => $servicos]);
-
-        return redirect('/servicos')->with('success','Servicos  salvo com sucesso');
-
     }
 
     public function update(Request $request)
     {
-        //find é o método que faz select * from alunos where id= ?
-        $servicos = Servicos::find($request->id);
-        //método update faz um update aluno set nome = ?, idade=? ...
-        $servicos->update([
-            'nome' => $request->nome,
-            'marmod' => $request->marmod,
-            'placa' => $request->placa,
-            'defeito' => $request->defeito
+        // Validação dos dados recebidos
+        $request->validate([
+            'veiculos_id' => 'required|exists:veiculos,id',
+            'tipo_servicos_id' => 'required|exists:tipo_servicos,id',
+            'defeito' => 'required|string|max:255',
+            'placa' => 'required|string|max:10',
+            'modelo' => 'required|string|max:50',
+            'nome_cliente' => 'required|string|max:50',
+            'tipo' => 'required|string|max:50',
+            'tempo_estimado' => 'required|integer|min:0',
+            'status' => 'required|in:Em análise,Em andamento,Concluído',
         ]);
-        return redirect('/servicos')->with('success','Servicos editado com sucesso');
+
+        // Busca o serviço pelo ID
+        $servicos = Servicos::findOrFail($request->id);
+
+        // Atualiza o serviço
+        $servicos->update([
+            'veiculos_id' => $request->veiculos_id,
+            'tipo_servicos_id' => $request->tipo_servicos_id,
+            'defeito' => $request->defeito,
+            'placa' => $request->placa,
+            'modelo' => $request->modelo,
+            'nome_cliente' => $request->nome_cliente,
+            'tipo' => $request->tipo,
+            'tempo_estimado' => $request->tempo_estimado,
+            'status' => $request->status,
+        ]);
+
+        return redirect('/servicos')->with('success', 'Serviço editado com sucesso');
     }
 
     public function destroy($id)
     {
-        //select * from aluno where id = ?
-        $servicos = Servicos::find($id);
-        //deleta o aluno no banco
+        // Busca o serviço pelo ID
+        $servicos = Servicos::findOrFail($id);
+        // Deleta o serviço
         $servicos->delete();
 
-        return redirect('/servicos')->with('success','servicoss excluido com sucesso');
+        return redirect('/servicos')->with('success', 'Serviço excluído com sucesso');
     }
 }
-

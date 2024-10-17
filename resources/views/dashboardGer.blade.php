@@ -96,6 +96,7 @@
             text-align: center;
         }
     </style>
+    
 </head>
 
 <body>
@@ -145,7 +146,7 @@
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOQVr885BGjm9YYHlEilsoS2Zp7kHrtykLvg&s" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
                         <h5 class="card-title">Lista de serviços oferecidos</h5>
-                        <a href="{{ url('/servicos') }}" class="btn btn-primary">ACESSAR</a>
+                        <a href="{{ url('/tipo_servicos') }}" class="btn btn-primary">ACESSAR</a>
                     </div>
                 </div>
             </div>
@@ -153,13 +154,9 @@
     </div>
 
     <!-- Certificação -->
-    <section class="certificacao">
+    <section class="certificacao fixed-bottom">
         <div class="container">
-            <p>CNPJ: 22.440.102/1903-17</p>
-            <p>Endereço: Bairro São José, 123 - Passo Fundo , RS- CEP 99052-900</p>
-            <p>Telefone: (54) 99650-8854</p>
-            <p>Email: 196187@upf.br</p>
-            <p>&copy; 2024 Gerenciamento Automotivo. Todos os direitos reservados.</p>
+            <p class="mb-0">&copy; 2024 Gerenciamento Automotivo. Todos os direitos reservados.</p>
         </div>
     </section>
 

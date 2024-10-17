@@ -3,6 +3,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\VeiculosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicosController;
+use App\Http\Controllers\Tipo_servicosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,14 @@ Route::get('/veiculos/editar/{id}', [VeiculosController::class, 'edit']);
 Route::post('/veiculos/editar/', [VeiculosController::class, 'update']);
 Route::get('/veiculos/delete/{id}', [VeiculosController::class, 'destroy']);
 
+Route::get('/tipo_servicos', [Tipo_servicosController::class, 'index']);
+Route::get('/tipo_servicos/novo', [Tipo_servicosController::class, 'create']);
+Route::post('/tipo_servicos/novo', [Tipo_servicosController::class, 'store']);
+
+Route::get('/tipo_servicos/editar/{id}', [Tipo_servicosController::class, 'edit']);
+Route::post('/tipo_servicos/editar/', [Tipo_servicosController::class, 'update']);
+Route::get('/tipo_servicos/delete/{id}', [Tipo_servicosController::class, 'destroy']);
+
 
 Route::get('/servicos', [ServicosController::class, 'index']);
 Route::get('/servicos/novo', [ServicosController::class, 'create']);
@@ -55,6 +64,7 @@ Route::post('/servicos/novo', [ServicosController::class, 'store']);
 Route::get('/servicos/editar/{id}', [ServicosController::class, 'edit']);
 Route::post('/servicos/editar/', [ServicosController::class, 'update']);
 Route::get('/servicos/delete/{id}', [ServicosController::class, 'destroy']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

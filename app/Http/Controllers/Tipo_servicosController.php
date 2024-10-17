@@ -2,84 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\clientes;
+use App\Models\tipo_servicos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class ClientesController extends Controller
+class Tipo_servicosController extends Controller
 {
     //
     public function index()
     {
         //usaremos a model para buscar os alunos
         //select * from alunos order by nome asc
-        $listaClientes = DB::table('clientes')->orderBy('nome', 'asc')->get();
-        $listaClientes = json_decode($listaClientes, true);
+        $listaTipo_servicos = DB::table('tipo_servicos')->orderBy('tipo', 'asc')->get();
+        $listaTipo_servicos = json_decode($listaTipo_servicos, true);
 
-        $total = DB::table('clientes')->count();
-        //dd($listaAlunos);
-        return view('clientes.index', ['clientes' => $listaClientes, 'total' => $total ]);
+        $total = DB::table('tipo_servicos')->count();
+        //dd($listaTipo_servicos);
+        return view('tipo_servicos.index', ['tipo_servicos' => $listaTipo_servicos, 'total' => $total ]);
     }
 
     public function create()
     {
         //alguma lógica aqui
-        return view('clientes.create');
+        return view('tipo_servicos.create');
     }
 
     public function store(Request $request)
     {
         //dd($request->all());
         $request->validate([
-            'nome' => 'required|min:2|max:50',
+            'tipo' => 'required|min:2|max:50',
             'email' => 'email:rfc,dns'
         ]);
 
-        Clientes::create([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'cpf' => $request->cpf
+        Tipo_servicos::create([
+            'tipo' => $request->tipo,
+            'tempo_estimado' => $request->tempo_estimado,
+            'custo_medio' => $request->custo_medio
         ]);
         
-        return redirect('/clientes')->with('success','Cliente salvo com sucesso');
+        return redirect('/tipo_servicos')->with('success','Tipo salvo com sucesso');
 
     }
 
     public function edit($id)
     {
         //find é o método que faz select * from alunos where id= ?
-        $clientes = Clientes::find($id);
+        $tipo_servicos = Tipo_servicos::find($id);
         //retornamos a view passando a TUPLA de aluno consultado
-        return view('clientes.edit', ['clientes' => $clientes]);
+        return view('tipo_servicos.edit', ['tipo_servicos' => $tipo_servicos]);
 
-        return redirect('/clientes')->with('success','Cliente salvo com sucesso');
+        return redirect('/tipo_servicos')->with('success','tipo_servicos salvo com sucesso');
 
     }
 
     public function update(Request $request)
     {
         //find é o método que faz select * from clientes where id= ?
-        $clientes = Clientes::find($request->id);
+        $tipo_servicos = Tipo_servicos::find($request->id);
         //método update faz um update clientes set nome = ?, idade=? ...
-        $clientes->update([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'cpf' => $request->cpf
+        $tipo_servicos->update([
+            'tipo' => $request->tipo,
+            'tempo_estimado' => $request->tempo_estimado,
+            'custo_medio' => $request->custo_medio
         ]);
-        return redirect('/clientes')->with('success','Cliente editado com sucesso');
+        return redirect('/tipo_servicos')->with('success','tipo_servicos editado com sucesso');
     }
 
     public function destroy($id)
     {
         //select * from aluno where id = ?
-        $clientes = Clientes::find($id);
+        $tipo_servicos = Tipo_servicos::find($id);
         //deleta o aluno no banco
-        $clientes->delete();
+        $tipo_servicos->delete();
 
-        return redirect('/clientes')->with('success','Cliente excluido com sucesso');
+        return redirect('/tipo_servicos')->with('success','tipo_servicos excluido com sucesso');
     }
     
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            background-color: #f0f2f5;
+            background-color: #f4f7fa;
             color: #333;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -22,24 +22,26 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            opacity: 0.3;
         }
 
         .content-container {
             position: relative;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .card {
-            margin: 15px auto;
+            margin: 20px auto;
             border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: transform 0.3s ease-in-out;
         }
 
         .card:hover {
@@ -49,19 +51,19 @@
         .card-img-top {
             height: 200px;
             object-fit: cover;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
         }
 
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #fff;
         }
 
         .nav-link {
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
 
         .nav-link:hover {
@@ -71,29 +73,41 @@
         .btn-primary {
             background-color: #007bff;
             border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         .btn-primary:hover {
             background-color: #0056b3;
         }
 
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #e9ecef;
-            margin-top: 30px;
+        .dashboard-title {
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .certificacao {
-            background-color: #343a40;
+            background-color: #282c34;
             color: #fff;
             padding: 20px 0;
-            margin-top: 30px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
-        .certificacao h2,
         .certificacao p {
-            text-align: center;
+            margin: 0;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -124,51 +138,45 @@
     <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
 
     <div class="content-container">
-        <h1 class="text-center mb-4">GERENCIAMENTO AUTOMOTIVO</h1>
+        <h1 class="dashboard-title">Gerenciamento Automotivo</h1>
         <div class="row justify-content-center">
             <!-- Card 1: Lista de Clientes -->
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
-                    <img src="https://blog.usadosbr.com/wp-content/uploads/2016/06/oficina_mecanica_2.jpg.jpeg" class="card-img-top" alt="Imagem do cartão">
+                    <img src="https://blog.usadosbr.com/wp-content/uploads/2016/06/oficina_mecanica_2.jpg.jpeg" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">Lista de clientes</h5>
-                        <a href="{{ url('/clientes') }}" class="btn btn-primary">ACESSAR</a>
+                        <h5 class="card-title">Lista de Clientes</h5>
+                        <a href="{{ url('/clientes') }}" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
             <!-- Card 2: Lista de Serviços -->
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
                     <img src="https://www.jrcastro.com.br/mecanica/imagens/oficina-mecanica-mais-proxima.jpg" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
-                        <h5 class="card-title">Lista de serviço</h5>
-                        <a href="{{ url('/servicos') }}" class="btn btn-primary">ACESSAR</a>
+                        <h5 class="card-title">Lista de Serviços</h5>
+                        <a href="{{ url('/servicos') }}" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
             <!-- Card 3: Gerenciar Veículos e Serviços -->
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
                     <img src="https://play-lh.googleusercontent.com/zAboa4aVE6Ix_c8Lae_5SfY-eI3dpOdJnj8amk-HyRFjnCDSaBRCJCOmySeteE4fAyg" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
                         <h5 class="card-title">Gerenciamento</h5>
-                        <a href="{{ url('/dashboardGer') }}" class="btn btn-primary">ACESSAR</a>
+                        <a href="{{ url('/dashboardGer') }}" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
-            <!-- Card 4: Segunda Dashboard -->
-          
         </div>
     </div>
 
     <!-- Certificação -->
     <section class="certificacao">
         <div class="container">
-            <p>CNPJ: 22.440.102/1903-17</p>
-            <p>Endereço: Bairro São José, 123 - Passo Fundo , RS- CEP 99052-900</p>
-            <p>Telefone: (54) 99650-8854</p>
-            <p>Email: 196187@upf.br</p>
-            <p>&copy; 2024 Gerenciamento Automotivo. Todos os direitos reservados.</p>
+            <p class="mb-0">&copy; 2024 Gerenciamento Automotivo. Todos os direitos reservados.</p>
         </div>
     </section>
 
