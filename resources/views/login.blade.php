@@ -74,9 +74,7 @@
                         <span class="ml-2 text-sm text-gray-600">{{ __('Lembrar-me') }}</span>
                         
                     </label>
-                    <div class="text-sm">
-                        <a href="{{ route('password.request') }}" class="text-indigo-600 hover:text-indigo-500">{{ __('Esqueceu sua senha?') }}</a>
-                    </div>
+                    
                 </div>
 
                 <!-- Botão de Login -->
