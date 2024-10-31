@@ -10,16 +10,17 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        z-index: -1; /* Garante que a imagem esteja atrás do conteúdo */
+        z-index: -1;
+        /* Garante que a imagem esteja atrás do conteúdo */
     }
 
     /* Estilo para centralizar o container da lista de clientes */
     .content-container {
         position: relative;
         max-width: 1200px;
-        margin: 50px auto; /* Ajuste a margem superior conforme necessário */
+        margin: 50px auto;
         padding: 20px;
-        background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente para contraste */
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 8px;
     }
 </style>
@@ -29,67 +30,55 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>Cadastro de serviços</h2>
+        <h2>Cadastro de Serviços</h2>
     </div>
     <div class="card-body">
         <div class="row">
             @if($errors->any())
-                <div class="alert alert-danger alert-dismissible">
-                    <strong>Problemas nos seus dados:</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="alert alert-danger alert-dismissible">
+                <strong>Problemas nos seus dados:</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
         </div>
         <div class="row">
-           <form action="{{ url('servicos/novo') }}" method="POST">
-              @csrf
+            <form action="{{ url('servicos/novo') }}" method="POST">
+                @csrf
                 <div class="row">
-                    <strong>Marca:</strong>
-                    <input placeholder="Informe o nome" class="form-control mb-3" name="marca" type="text" required />
-
-                    <strong>Placa:</strong>
-                    <input placeholder="Informe a placa" class="form-control mb-3" name="placa" type="text" required />
-
-                    <strong>Ano:</strong>
-                    <input placeholder="Informe o ano" class="form-control mb-3" name="ano" type="text" required />
-
-                    <strong>Modelo:</strong>
-                    <input placeholder="Informe o modelo" class="form-control mb-3" name="modelo" type="text" required />
-
                     <strong>Cliente:</strong>
-                    <select class="form-control mb-3" name="id_cliente" required>
+                    <select class="form-control mb-3" name="id_cliente" id="clienteSelect" required>
                         <option value="">Selecione um cliente</option>
                         @foreach($clientes as $cliente)
-                            <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                        <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
                         @endforeach
                     </select>
 
+                    <strong>Veículo:</strong>
+                    <select class="form-control mb-3" name="veiculos_id" id="veiculoSelect" required>
+                        <option value="">Selecione um veículo</option>
+                    </select>
+
                     <strong>Tipo Serviço:</strong>
-                    <select class="form-control mb-3" name="tipo_servico_id" required>
+                    <select class="form-control mb-3" name="tipo_servicos_id" required>
                         <option value="">Selecione um tipo de serviço</option>
-                        <!-- Adicione as opções de tipo de serviço aqui -->
+                        @foreach($tipo_servicos as $tipo_servico)
+                        <option value="{{ $tipo_servico->id }}">{{ $tipo_servico->tipo }}</option>
+                        @endforeach
                     </select>
 
                     <strong>Defeito:</strong>
                     <textarea placeholder="Informe o defeito" class="form-control mb-3" name="defeito" required></textarea>
 
-                    <strong>Tipo:</strong>
-                    <input placeholder="Informe o tipo" class="form-control mb-3" name="tipo" type="text" required />
-
-                    <strong>Tempo Estimado (minutos):</strong>
-                    <input placeholder="Informe o tempo estimado" class="form-control mb-3" name="tempo_estimado" type="number" required />
-
                     <strong>Status:</strong>
                     <select class="form-control mb-3" name="status" required>
-                        <option value="">Selecione um status</option>
-                        <option value="pendente">Pendente</option>
-                        <option value="em andamento">Em Andamento</option>
-                        <option value="concluído">Concluído</option>
+                        <option value="Em análise">Em análise</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Concluído">Concluído</option>
                     </select>
 
                     <div class="col">
@@ -103,5 +92,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('clienteSelect').addEventListener('change', function() {
+        const clienteId = this.value;
+
+        if (clienteId) {
+            fetch(`/api/veiculos/${clienteId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const veiculoSelect = document.getElementById('veiculoSelect');
+                    veiculoSelect.innerHTML = '<option value="">Selecione um veículo</option>';
+
+                    // Adiciona novas opções com base nos veículos retornados
+                    data.forEach(veiculo => {
+                        veiculoSelect.innerHTML += `<option value="${veiculo.id}">${veiculo.placa} - ${veiculo.modelo}</option>`;
+                    });
+                });
+        }
+    });
+</script>
 
 @endsection

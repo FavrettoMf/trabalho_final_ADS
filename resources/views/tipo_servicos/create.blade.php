@@ -29,7 +29,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>Cadastro de Veiculos</h2>
+        <h2>Cadastro de serviços prestados</h2>
     </div>
     <div class="card-body">
         <div class="row">
@@ -48,13 +48,13 @@
               @csrf
                 <div class="row">
                     <strong>Tipo:</strong>
-                    <input placeholder="Informe o nome" class="form-control mb-3" name="tipo" type="text" />
+                    <input placeholder="Informe o tipo de serviço" class="form-control mb-3" name="tipo" type="text" />
 
                     <strong>Tempo Estimado:</strong>
-                    <input placeholder="Informe o email" class="form-control mb-3" name="tempo_estimado" type="text" />
+                    <input placeholder="Informe em horas" class="form-control mb-3" name="tempo_estimado" type="text" />
 
                     <strong>Custo Médio:</strong>
-                    <input placeholder="Informe seu telefone" class="form-control mb-3" name="custo_medio" type="text" />
+                    <input placeholder="Informe o custo médio do serviço" class="form-control mb-3" name="custo_medio" type="text" />
 
                     <div class="col">
                         <a class="btn btn-secondary" href="{{ url('/tipo_servicos') }}">Voltar</a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\clientes;
+use App\Models\veiculos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -33,7 +34,9 @@ class ClientesController extends Controller
         //dd($request->all());
         $request->validate([
             'nome' => 'required|min:2|max:50',
-            'email' => 'email:rfc,dns'
+            'email' => 'email:rfc,dns',
+            'telefone' => 'nullable', // Validar conforme necessário
+           
         ]);
 
         Clientes::create([
@@ -46,6 +49,13 @@ class ClientesController extends Controller
         return redirect('/clientes')->with('success','Cliente salvo com sucesso');
 
     }
+    public function getVeiculos($id)
+{
+    $veiculos = veiculos::where('id_cliente', $id)->get();
+    return response()->json($veiculos);
+}
+
+
 
     public function edit($id)
     {

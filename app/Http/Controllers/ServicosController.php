@@ -2,118 +2,96 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\clientes;
-use App\Models\servicos; // Certifique-se de que o nome do modelo está correto
-use App\Models\tipo_servicos;
-use App\Models\veiculos;
+use App\Models\Clientes;
+use App\Models\Servicos;
+use App\Models\tipo_servicos; // Certifique-se de que a model está no formato correto
+use App\Models\Veiculos;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ServicosController extends Controller
 {
     public function index()
     {
-        // Usaremos a model para buscar os serviços
-        $listaServicos = Servicos::orderBy('nome_cliente', 'asc')->with(['veiculo', 'tipoServico'])->get();
-        $total = Servicos::count();
-
-        return view('servicos.index', ['servicos' => $listaServicos, 'total' => $total]);
+        
+        // Obtém todos os serviços e carrega as relações necessárias
+        $servicos = Servicos::with(['veiculos', 'tipo_servicos'])->get();
+    
+        // Contadores de sericos concluidos
+        $countConcluido = $servicos->where('status', 'Concluído')->count();
+    
+        return view('servicos.index', compact('servicos',  'countConcluido'));
     }
 
-   public function create()
-{
-    // Buscar todos os clientes e veículos
-    $clientes = clientes::all(); // Certifique-se de que o modelo está correto
-    $veiculos = veiculos::all(); // Certifique-se de que o modelo está correto
-    $tipo_servicos = tipo_servicos::all(); // Certifique-se de que o modelo está correto
+    
+    
+    public function create()
+    {
+        // Buscar todos os clientes, tipos de serviços e veículos
+        $clientes = Clientes::all();
+        $tipo_servicos = tipo_servicos::all();
+        $veiculos = Veiculos::all(); // Corrigido para PascalCase
 
-    return view('servicos.create', [
-        'clientes' => $clientes,
-        'veiculos' => $veiculos,
-        'tipo_servicos' => $tipo_servicos
-    ]);
-}
-
+        return view('servicos.create', [
+            'clientes' => $clientes,
+            'tipo_servicos' => $tipo_servicos,
+            'veiculos' => $veiculos
+        ]);
+    }
 
     public function store(Request $request)
     {
-        // Validação dos dados recebidos
+        // Validação dos dados
         $request->validate([
             'veiculos_id' => 'required|exists:veiculos,id',
             'tipo_servicos_id' => 'required|exists:tipo_servicos,id',
             'defeito' => 'required|string|max:255',
-            'placa' => 'required|string|max:10',
-            'modelo' => 'required|string|max:50',
-            'nome_cliente' => 'required|string|max:50',
-            'tipo' => 'required|string|max:50',
-            'tempo_estimado' => 'required|integer|min:0',
             'status' => 'required|in:Em análise,Em andamento,Concluído',
         ]);
 
         // Criação do novo serviço
-        Servicos::create([
-            'veiculos_id' => $request->veiculos_id,
-            'tipo_servicos_id' => $request->tipo_servicos_id,
-            'defeito' => $request->defeito,
-            'placa' => $request->placa,
-            'modelo' => $request->modelo,
-            'nome_cliente' => $request->nome_cliente,
-            'tipo' => $request->tipo,
-            'tempo_estimado' => $request->tempo_estimado,
-            'status' => $request->status,
-        ]);
-        
+        Servicos::create($request->all());
+
         return redirect('/servicos')->with('success', 'Serviço salvo com sucesso');
     }
 
     public function edit($id)
     {
         // Busca o serviço pelo ID
-        $servicos = Servicos::findOrFail($id);
-        return view('servicos.edit', ['servicos' => $servicos]);
+        $servico = Servicos::findOrFail($id);
+        $clientes = Clientes::all(); // Busca todos os clientes para o dropdown
+        $tipo_servicos = tipo_servicos::all(); // Busca todos os tipos de serviços para o dropdown
+        $veiculos = Veiculos::all(); // Busca todos os veículos para o dropdown
+
+        return view('servicos.edit', [
+            'servico' => $servico,
+            'clientes' => $clientes,
+            'tipo_servicos' => $tipo_servicos,
+            'veiculos' => $veiculos
+        ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        // Validação dos dados recebidos
+        // Validação dos dados
         $request->validate([
             'veiculos_id' => 'required|exists:veiculos,id',
             'tipo_servicos_id' => 'required|exists:tipo_servicos,id',
             'defeito' => 'required|string|max:255',
-            'placa' => 'required|string|max:10',
-            'modelo' => 'required|string|max:50',
-            'nome_cliente' => 'required|string|max:50',
-            'tipo' => 'required|string|max:50',
-            'tempo_estimado' => 'required|integer|min:0',
             'status' => 'required|in:Em análise,Em andamento,Concluído',
         ]);
 
-        // Busca o serviço pelo ID
-        $servicos = Servicos::findOrFail($request->id);
-
         // Atualiza o serviço
-        $servicos->update([
-            'veiculos_id' => $request->veiculos_id,
-            'tipo_servicos_id' => $request->tipo_servicos_id,
-            'defeito' => $request->defeito,
-            'placa' => $request->placa,
-            'modelo' => $request->modelo,
-            'nome_cliente' => $request->nome_cliente,
-            'tipo' => $request->tipo,
-            'tempo_estimado' => $request->tempo_estimado,
-            'status' => $request->status,
-        ]);
+        $servicos = Servicos::findOrFail($id);
+        $servicos->update($request->all());
 
-        return redirect('/servicos')->with('success', 'Serviço editado com sucesso');
+        return redirect('/servicos')->with('success', 'Serviço atualizado com sucesso');
     }
 
     public function destroy($id)
     {
-        // Busca o serviço pelo ID
-        $servicos = Servicos::findOrFail($id);
         // Deleta o serviço
-        $servicos->delete();
+        $servico = Servicos::findOrFail($id);
+        $servico->delete();
 
         return redirect('/servicos')->with('success', 'Serviço excluído com sucesso');
     }

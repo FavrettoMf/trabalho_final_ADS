@@ -44,6 +44,7 @@ Route::get('/veiculos', [VeiculosController::class, 'index']);
 Route::get('/veiculos/novo', [VeiculosController::class, 'create']);
 Route::post('/veiculos/novo', [VeiculosController::class, 'store']);
 
+
 Route::get('/veiculos/editar/{id}', [VeiculosController::class, 'edit']);
 Route::post('/veiculos/editar/', [VeiculosController::class, 'update']);
 Route::get('/veiculos/delete/{id}', [VeiculosController::class, 'destroy']);
@@ -60,8 +61,14 @@ Route::get('/tipo_servicos/delete/{id}', [Tipo_servicosController::class, 'destr
 Route::get('/servicos', [ServicosController::class, 'index']);
 Route::get('/servicos/novo', [ServicosController::class, 'create']);
 Route::post('/servicos/novo', [ServicosController::class, 'store']);
+Route::get('/api/veiculos/{id_cliente}', [ClientesController::class, 'getVeiculos']);
+
 
 Route::get('/servicos/editar/{id}', [ServicosController::class, 'edit']);
+Route::put('servicos/update/{id}', [ServicosController::class, 'update'])->name('servicos.edit');
+Route::get('/clientes/{id}/veiculos', [ClientesController::class, 'getVeiculos']);
+
+
 Route::post('/servicos/editar/', [ServicosController::class, 'update']);
 Route::get('/servicos/delete/{id}', [ServicosController::class, 'destroy']);
 

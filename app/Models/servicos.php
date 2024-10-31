@@ -8,15 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class servicos extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'veiculos_id',        // ID do veículo
-        'tipo_servicos_id',   // ID do tipo de serviço
-        'defeito',            // Descrição do defeito do veículo
-        'status',             // Status do serviço
-        'placa',              // Placa do veículo
-        'modelo',             // Modelo do veículo
-        'nome_cliente',       // Nome do cliente
-        'tipo',               // Tipo do serviço
-        'tempo_estimado'      // Tempo estimado do serviço
+        'veiculos_id',
+        'tipo_servicos_id',
+        'defeito',
+        'status',
     ];
+
+    // Definindo a relação com o modelo Veiculos
+    public function veiculos()
+    {
+        return $this->belongsTo(Veiculos::class, 'veiculos_id');
+    }
+
+    // Definindo a relação com o modelo TipoServicos
+    public function tipo_servicos()
+    {
+        return $this->belongsTo(tipo_servicos::class, 'tipo_servicos_id');
+    }
 }

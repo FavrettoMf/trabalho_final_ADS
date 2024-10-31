@@ -42,7 +42,7 @@ class Tipo_servicosController extends Controller
             'custo_medio' => $request->custo_medio
         ]);
         
-        return redirect('/tipo_servicos')->with('success','Tipo salvo com sucesso');
+        return redirect('/tipo_servicos')->with('success','Serviço salvo com sucesso');
 
     }
 
@@ -53,7 +53,7 @@ class Tipo_servicosController extends Controller
         //retornamos a view passando a TUPLA de aluno consultado
         return view('tipo_servicos.edit', ['tipo_servicos' => $tipo_servicos]);
 
-        return redirect('/tipo_servicos')->with('success','tipo_servicos salvo com sucesso');
+        return redirect('/tipo_servicos')->with('success','Serviço salvo com sucesso');
 
     }
 
@@ -67,7 +67,7 @@ class Tipo_servicosController extends Controller
             'tempo_estimado' => $request->tempo_estimado,
             'custo_medio' => $request->custo_medio
         ]);
-        return redirect('/tipo_servicos')->with('success','tipo_servicos editado com sucesso');
+        return redirect('/tipo_servicos')->with('success','Serviço editado com sucesso');
     }
 
     public function destroy($id)
@@ -77,7 +77,7 @@ class Tipo_servicosController extends Controller
         //deleta o aluno no banco
         $tipo_servicos->delete();
 
-        return redirect('/tipo_servicos')->with('success','tipo_servicos excluido com sucesso');
+        return redirect('/tipo_servicos')->with('success','Serviço excluido com sucesso');
     }
     
 }

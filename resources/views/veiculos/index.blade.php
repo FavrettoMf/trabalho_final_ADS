@@ -97,7 +97,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Deseja realmente excluir esse cliente?
+        Deseja realmente excluir esse veiculo?
       </div>
       <div class="modal-footer">
         <a class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</a>

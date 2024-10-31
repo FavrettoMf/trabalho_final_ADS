@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            background-color: #f0f2f5;
+            background-color: #f4f7fa;
             color: #333;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -22,46 +22,50 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+
         }
 
         .content-container {
             position: relative;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1300px;
+            margin: 90px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .card {
-            margin: 15px auto;
+            margin: 22px auto;
             border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: transform 0.3s ease-in-out;
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.10);
         }
 
         .card-img-top {
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1.9rem;
             font-weight: bold;
             color: #fff;
         }
 
         .nav-link {
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.4rem;
         }
 
         .nav-link:hover {
@@ -71,29 +75,41 @@
         .btn-primary {
             background-color: #007bff;
             border: none;
+            padding: 10px 90px;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         .btn-primary:hover {
             background-color: #0056b3;
         }
 
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #e9ecef;
-            margin-top: 30px;
+        .dashboard-title {
+            font-size: 1.8rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .certificacao {
-            background-color: #343a40;
+            background-color: #282c34;
             color: #fff;
             padding: 20px 0;
-            margin-top: 30px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
-        .certificacao h2,
         .certificacao p {
-            text-align: center;
+            margin: 0;
+            font-size: 1rem;
         }
     </style>
     
@@ -103,7 +119,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Gerenciamento Automotivo</a>
+            <a class="navbar-brand" href="{{ url('/dashboard') }}">Gerenciamento Automotivo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -120,6 +136,9 @@
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-light ms-3" href="{{ url('/') }}">Sair</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light ms-3" href="{{ url('/') }}">Criar orçamento</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -133,17 +152,17 @@
             <!-- Card 1: Veículos -->
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDKBtVvctXpMQwC01dwlZcsU0QCb1g7dyd5A&s" class="card-img-top" alt="Imagem do cartão">
+                    <img src="https://www.jrcastro.com.br/mecanica/imagens/oficina-mecanica-mais-proxima.jpg" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
-                        <h5 class="card-title">Lista de veiculos</h5>
-                        <a href="{{ url('/veiculos') }}" class="btn btn-primary">ACESSAR</a>
+                        <h5 class="card-title">Lista de serviços</h5>
+                        <a href="{{ url('/servicos') }}" class="btn btn-primary">ACESSAR</a>
                     </div>
                 </div>
             </div>
             <!-- Card 2: Serviços -->
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOQVr885BGjm9YYHlEilsoS2Zp7kHrtykLvg&s" class="card-img-top" alt="Imagem do cartão">
+                    <img src="https://static.wixstatic.com/media/332f0e_b2b89dcbbb794d47a7a5a794b0ecaef4~mv2.jpg/v1/fill/w_980,h_551,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/332f0e_b2b89dcbbb794d47a7a5a794b0ecaef4~mv2.jpg" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
                         <h5 class="card-title">Lista de serviços oferecidos</h5>
                         <a href="{{ url('/tipo_servicos') }}" class="btn btn-primary">ACESSAR</a>

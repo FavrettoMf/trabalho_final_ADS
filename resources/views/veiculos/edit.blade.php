@@ -36,7 +36,7 @@
 
             <div class="mb-3">
                 <label for="marca" class="form-label"><strong>Marca:</strong></label>
-                <input class="form-control" name="marca" type="text" value="{{ $veiculo->marca }}" required>
+                <input class="form-control" name="marca" type="text" value="{{ $veiculo->Marca }}" required>
             </div>
 
             <div class="mb-3">

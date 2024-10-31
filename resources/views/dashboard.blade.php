@@ -22,22 +22,24 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.3;
+
         }
 
         .content-container {
             position: relative;
-            max-width: 900px;
-            margin: 100px auto;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 15px;
+            max-width: 1300px;
+            margin: 90px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
         .card {
-            margin: 20px auto;
+            margin: 22px auto;
             border: none;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
@@ -45,25 +47,25 @@
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.10);
         }
 
         .card-img-top {
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         .navbar-brand {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: bold;
             color: #fff;
         }
 
         .nav-link {
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
 
         .nav-link:hover {
@@ -73,7 +75,7 @@
         .btn-primary {
             background-color: #007bff;
             border: none;
-            padding: 12px 25px;
+            padding: 10px 90px;
             font-size: 1.1rem;
             font-weight: bold;
         }
@@ -83,7 +85,7 @@
         }
 
         .dashboard-title {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             color: #333;
             font-weight: bold;
             margin-bottom: 25px;
@@ -153,10 +155,10 @@
             <!-- Card 2: Lista de Serviços -->
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card text-center">
-                    <img src="https://www.jrcastro.com.br/mecanica/imagens/oficina-mecanica-mais-proxima.jpg" class="card-img-top" alt="Imagem do cartão">
+                    <img src="https://automecanicafroes.com.br/wp-content/uploads/2024/03/Captura-de-tela-2024-03-25-160647.png" class="card-img-top" alt="Imagem do cartão">
                     <div class="card-body">
-                        <h5 class="card-title">Lista de Serviços</h5>
-                        <a href="{{ url('/servicos') }}" class="btn btn-primary">Acessar</a>
+                        <h5 class="card-title">Lista de Veículos</h5>
+                        <a href="{{ url('/veiculos') }}" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>

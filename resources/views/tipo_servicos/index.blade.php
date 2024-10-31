@@ -30,7 +30,7 @@
 <div class="content-container">
     <div class="card">
         <div class="card-header">
-            <h2>Lista de Tipos de serviços</h2>
+            <h2>Lista de serviços oferecidos</h2>
         </div>
 
         <div class="card-body">
@@ -58,9 +58,9 @@
                         </tr>
                         @foreach($tipo_servicos as $tipo_servicos)
                         <tr>
-                            <td>{{ $tipo_servicos['tipo'] }}</td>
-                            <td>{{ $tipo_servicos['tempo_estimado'] }}</td>
-                            <td>{{ $tipo_servicos['custo_medio'] }}</td>
+                        <td>{{ $tipo_servicos['tipo'] }}</td>
+                        <td>{{ number_format($tipo_servicos['tempo_estimado'] ) }} horas</td>
+                        <td>R$ {{ number_format($tipo_servicos['custo_medio'], 2, ',', '.') }}</td>
                             <td>
                                 <a class="btn btn-primary" href="{{ url('/tipo_servicos/editar', ['id' => $tipo_servicos['id']]) }}">Editar</a>
                                 <a onclick="funConfirma(this)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger" href="{{ url('/tipo_servicos/delete', ['id' => $tipo_servicos['id']]) }}">Excluir</a>
@@ -76,7 +76,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-secondary float-end" href="{{ url('/dashboard') }}">Voltar</a>
+                    <a class="btn btn-secondary float-end" href="{{ url('/dashboardGer') }}">Voltar</a>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Deseja realmente excluir esse cliente?
+        Deseja realmente excluir esse serviço?
       </div>
       <div class="modal-footer">
         <a class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</a>
