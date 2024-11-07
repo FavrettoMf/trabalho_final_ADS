@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\clientes;
 use App\Models\veiculos;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -31,23 +32,26 @@ class ClientesController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
         $request->validate([
-            'nome' => 'required|min:2|max:50',
-            'email' => 'email:rfc,dns',
-            'telefone' => 'nullable', // Validar conforme necessário
-           
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|string|max:15',
+            'cpf' => 'required|string|unique:clientes,cpf',
+        ], [
+            'cpf.unique' => 'Este CPF já está cadastrado.', // Mensagem personalizada
+            'cpf.required' => 'O CPF é obrigatório.',       // Outras mensagens personalizadas, se necessário
         ]);
 
-        Clientes::create([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'cpf' => $request->cpf
-        ]);
+        try {
+            Clientes::create($request->all());
+            return redirect('/clientes')->with('success','Cliente salvo com sucesso');
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) { // Código de erro para violação de chave única
+                return redirect()->back()->withErrors(['cpf' => '']);
+            } 
+        }
         
-        return redirect('/clientes')->with('success','Cliente salvo com sucesso');
-
+        
     }
     public function getVeiculos($id)
 {
@@ -59,9 +63,9 @@ class ClientesController extends Controller
 
     public function edit($id)
     {
-        //find é o método que faz select * from alunos where id= ?
+        //find é o método que faz select * from clientes where id= ?
         $clientes = Clientes::find($id);
-        //retornamos a view passando a TUPLA de aluno consultado
+        //retornamos a view passando a TUPLA de clientes consultado
         return view('clientes.edit', ['clientes' => $clientes]);
 
         return redirect('/clientes')->with('success','Cliente salvo com sucesso');

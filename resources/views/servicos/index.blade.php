@@ -2,32 +2,80 @@
 @section('content')
 
 <style>
-    /* Estilo para garantir que a imagem ocupe toda a tela */
+    html,
+    body {
+        height: auto;
+        /* Permite que a altura se ajuste ao conteúdo */
+        margin: 0;
+        /* Remove margens padrão do body */
+    }
+
+    body {
+        background-color: #f4f7fa;
+        /* Fundo padrão, caso a imagem não carregue */
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
+
     .background-image {
-        position: absolute;
+        position: fixed;
+        /* Mantém a imagem de fundo fixa ao rolar */
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        /* Ocupar 100% da altura da tela */
         object-fit: cover;
-        z-index: -1;
-        /* Garante que a imagem esteja atrás do conteúdo */
+        filter: brightness(37%);
+        z-index: -2;
+        /* Mantém a imagem atrás do conteúdo */
     }
 
-    /* Estilo para centralizar o container da lista de serviços */
     .content-container {
         position: relative;
-        max-width: 1200px;
-        margin: 50px auto;
+        max-width: 1600px;
+        margin: 0 auto;
+        /* Remove margem superior para evitar espaço branco */
         padding: 20px;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.8);
+        /* Fundo semi-transparente */
         border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        /* Adiciona espaço superior para que o conteúdo não fique grudado no topo */
+    }
+
+    .table .col-defeito {
+        max-width: 200px;
+        /* Ajuste a largura conforme necessário */
+        word-wrap: break-word;
+        /* Quebra a palavra se ela ultrapassar a largura */
+        white-space: pre-wrap;
+        /* Mantém as quebras de linha do texto */
+    }
+
+    .table .action-buttons {
+        display: flex;
+        /* Usando flexbox para alinhar os botões horizontalmente */
+        justify-content: space-between;
+        /* Espaçamento uniforme entre os botões */
+        width: 100px;
+        /* Defina uma largura fixa */
+    }
+
+    .table .action-buttons a {
+        font-size: 0.8em;
+        /* Reduz o tamanho da fonte */
+        margin: 0;
+        /* Remove margens */
+        padding: 5px 10px;
+        /* Ajuste o padding para botões menores */
     }
 </style>
 
 <!-- Imagem de fundo -->
 <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
-
+<div class="background-overlay"></div>
 <div class="content-container">
     <div class="card">
         <div class="card-header">
@@ -47,13 +95,19 @@
                 </div>
             </div>
 
+            
+            @if(session('service_id'))
+    <div class="col mt-3">
+        <a class="btn btn-danger" href="{{ route('servicos.gerar-pdf', session('service_id')) }}">Gerar relatório do serviço criado</a>
+    </div>
+@endif
+
             <div class="row">
                 <div class="col">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Cliente</th>
-                              
                                 <th>Placa</th>
                                 <th>Modelo</th>
                                 <th>Tipo de Serviço</th>
@@ -67,19 +121,22 @@
                         <tbody>
                             @foreach ($servicos as $servicos)
                             <tr>
-                                <td>{{ $servicos->veiculos['id_cliente'] }}</td>
-                            
+                                <td>{{ $servicos->veiculos->clientes->nome ?? 'Cliente não encontrado' }}</td>
                                 <td>{{ $servicos->veiculos['placa'] }}</td>
                                 <td>{{ $servicos->veiculos['modelo'] }}</td>
                                 <td>{{ $servicos->tipo_servicos['tipo'] }}</td>
                                 <td>{{ $servicos->tipo_servicos['tempo_estimado'] }} Horas</td>
                                 <td>R$ {{ number_format($servicos->tipo_servicos['custo_medio'], 2, ',', '.') }}</td>
-                                <td>{{ $servicos['defeito'] }}</td>
+                                <td class="col-defeito">{!! nl2br(e($servicos['defeito'])) !!}</td>
                                 <td>{{ $servicos['status'] }}</td>
                                 <td>
-                                <a class="btn btn-primary" href="{{ url('/servicos/editar', ['id' => $servicos['id']]) }}">Editar</a>
-                                <a onclick="funConfirma(this)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger" href="{{ url('/servicos/delete', ['id' => $servicos['id']]) }}">Excluir</a>
-                                   
+                                    <div class="action-buttons">
+                                        <a class="btn btn-primary" href="{{ url('/servicos/editar', ['id' => $servicos['id']]) }}">Editar</a>
+                                        <a onclick="funConfirma(this)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger" href="{{ url('/servicos/delete', ['id' => $servicos['id']]) }}">Excluir</a>
+                                    </div>
+                                    
+                                </td>
+
                                 </td>
                             </tr>
                             @endforeach
@@ -92,13 +149,12 @@
                     <a class="btn btn-secondary float-end" href="{{ url('/dashboardGer') }}">Voltar</a>
                 </div>
             </div>
-                <div class="col">
-                    <h5>Serviços Concluídos: <span class="badge bg-success">{{ $countConcluido }}</span></h5>
-                </div>
+            <div class="col">
+                <h5>Serviços Concluídos: <span class="badge bg-success">{{ $countConcluido }}</span></h5>
+            </div>
         </div>
     </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -158,6 +214,5 @@
         confirmButton.setAttribute('data-href', elemento.href);
     }
 </script>
-
 
 @endsection

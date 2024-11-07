@@ -5,6 +5,13 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+
+    'providers' => [
+    Barryvdh\DomPDF\ServiceProvider::class,
+],
+'aliases' => [
+    'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+],
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -184,5 +191,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+    
 
 ];
+
+

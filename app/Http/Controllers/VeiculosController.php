@@ -58,6 +58,7 @@ class VeiculosController extends Controller
             'id_cliente' => $request->id_cliente,
         ]);
         
+        
         return redirect('/veiculos')->with('success','Veiculo salvo com sucesso');
     }
 

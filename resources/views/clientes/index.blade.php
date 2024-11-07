@@ -2,30 +2,44 @@
 @section('content')
 
 <style>
-    /* Estilo para garantir que a imagem ocupe toda a tela */
-    .background-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1; /* Garante que a imagem esteja atrás do conteúdo */
-    }
+    html, body {
+    height: auto; /* Permite que a altura se ajuste ao conteúdo */
+    margin: 0; /* Remove margens padrão do body */
+}
 
-    /* Estilo para centralizar o container da lista de clientes */
-    .content-container {
-        position: relative;
-        max-width: 1200px;
-        margin: 50px auto; /* Ajuste a margem superior conforme necessário */
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente para contraste */
-        border-radius: 8px;
-    }
+body {
+    background-color: #f4f7fa; /* Fundo padrão, caso a imagem não carregue */
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.background-image {
+    position: fixed; /* Mantém a imagem de fundo fixa ao rolar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Ocupar 100% da altura da tela */
+    object-fit: cover;
+    filter: brightness(37%);
+    z-index: -2; /* Mantém a imagem atrás do conteúdo */
+}
+
+.content-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto; /* Remove margem superior para evitar espaço branco */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 50px; /* Adiciona espaço superior para que o conteúdo não fique grudado no topo */
+}
+
 </style>
 
 <!-- Imagem de fundo -->
 <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
+<div class="background-overlay"></div>
 
 <div class="content-container">
     <div class="card">
@@ -88,18 +102,23 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmação</h1>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-danger text-white">
+        <h2 class="modal-title fs-4" id="exampleModalLabel">
+          Confirmação de Exclusão
+        </h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Deseja realmente excluir esse cliente?
+        <p class="mb-3">
+          <strong>Atenção:</strong> Ao excluir este cliente, todos os veículos vinculados a ele também serão permanentemente removidos.
+        </p>
+        <p>Deseja realmente prosseguir com a exclusão?</p>
       </div>
-      <div class="modal-footer">
-        <a class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</a>
-        <a id="btnConfirma" href="" class="btn btn-primary">Confirmar</a>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancelar</button>
+        <a id="btnConfirma" class="btn btn-danger" class="btn btn-primary">Confirmar</a>
       </div>
     </div>
   </div>

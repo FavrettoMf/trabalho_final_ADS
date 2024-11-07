@@ -15,14 +15,16 @@
         }
 
         .background-image {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
-
+            filter: brightness(37%);
+            /* Deixa a imagem um pouco mais apagada */
+            z-index: -2;
+            /* Garante que a imagem esteja atrás da sobreposição e do conteúdo */
         }
 
         .content-container {
@@ -80,16 +82,6 @@
             font-weight: bold;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .dashboard-title {
-            font-size: 1.8rem;
-            color: #333;
-            font-weight: bold;
-            margin-bottom: 25px;
-        }
 
         .card-title {
             font-size: 1.4rem;
@@ -138,6 +130,7 @@
     </nav>
 
     <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
+    <div class="background-overlay"></div>
 
     <div class="content-container">
         <h1 class="dashboard-title">Gerenciamento Automotivo</h1>

@@ -68,6 +68,9 @@ Route::get('/servicos/editar/{id}', [ServicosController::class, 'edit']);
 Route::put('servicos/update/{id}', [ServicosController::class, 'update'])->name('servicos.edit');
 Route::get('/clientes/{id}/veiculos', [ClientesController::class, 'getVeiculos']);
 
+Route::get('/servicos/{id}/gerar-pdf', [ServicosController::class, 'gerarPdf'])->name('servicos.gerar-pdf');
+
+
 
 Route::post('/servicos/editar/', [ServicosController::class, 'update']);
 Route::get('/servicos/delete/{id}', [ServicosController::class, 'destroy']);

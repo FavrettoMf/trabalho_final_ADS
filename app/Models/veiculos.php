@@ -22,7 +22,7 @@ class veiculos extends Model
     // Definindo a relação com o modelo Clientes (caso seja aplicável)
     public function clientes()
     {
-        return $this->belongsTo(Clientes::class, 'clientes_id'); // Ajuste o nome da chave se necessário
+        return $this->belongsTo(Clientes::class, 'id_cliente'); // Ajuste o nome da chave se necessário
     }
 }
 

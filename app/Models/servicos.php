@@ -21,6 +21,7 @@ class servicos extends Model
     {
         return $this->belongsTo(Veiculos::class, 'veiculos_id');
     }
+    
 
     // Definindo a relação com o modelo TipoServicos
     public function tipo_servicos()

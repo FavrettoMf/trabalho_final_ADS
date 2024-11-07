@@ -15,19 +15,21 @@
         }
 
         .background-image {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
-
+            filter: brightness(37%);
+            /* Deixa a imagem um pouco mais apagada */
+            z-index: -2;
+            /* Garante que a imagem esteja atrás da sobreposição e do conteúdo */
         }
 
         .content-container {
             position: relative;
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 90px auto;
             padding: 30px;
             background: rgba(255, 255, 255, 0.85);
@@ -80,16 +82,6 @@
             font-weight: bold;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .dashboard-title {
-            font-size: 1.8rem;
-            color: #333;
-            font-weight: bold;
-            margin-bottom: 25px;
-        }
 
         .card-title {
             font-size: 1.4rem;

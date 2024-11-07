@@ -2,30 +2,44 @@
 @section('content')
 
 <style>
-    /* Estilo para garantir que a imagem ocupe toda a tela */
-    .background-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1; /* Garante que a imagem esteja atrás do conteúdo */
-    }
+    html, body {
+    height: auto; /* Permite que a altura se ajuste ao conteúdo */
+    margin: 0; /* Remove margens padrão do body */
+}
 
-    /* Estilo para centralizar o container da lista de clientes */
-    .content-container {
-        position: relative;
-        max-width: 1200px;
-        margin: 50px auto; /* Ajuste a margem superior conforme necessário */
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente para contraste */
-        border-radius: 8px;
-    }
+body {
+    background-color: #f4f7fa; /* Fundo padrão, caso a imagem não carregue */
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.background-image {
+    position: fixed; /* Mantém a imagem de fundo fixa ao rolar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Ocupar 100% da altura da tela */
+    object-fit: cover;
+    filter: brightness(37%);
+    z-index: -2; /* Mantém a imagem atrás do conteúdo */
+}
+
+.content-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto; /* Remove margem superior para evitar espaço branco */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 50px; /* Adiciona espaço superior para que o conteúdo não fique grudado no topo */
+}
+
 </style>
 
 <!-- Imagem de fundo -->
 <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
+<div class="background-overlay"></div>
 
 <div class="content-container">
     <div class="card">
