@@ -71,17 +71,28 @@
         padding: 5px 10px;
         /* Ajuste o padding para botões menores */
     }
+
+    .dropdown .btn {
+    padding: 5px;
+    font-size: 1.2em; /* Tamanho dos pontinhos */
+}
 </style>
 
 <!-- Imagem de fundo -->
 <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
 <div class="background-overlay"></div>
+
 <div class="content-container">
+
+
+
     <div class="card">
         <div class="card-header">
             <h2>Lista de Serviços</h2>
         </div>
+
         <div class="card-body">
+
             @if ($message = Session::get('success'))
             <div class="alert alert-success alert-dismissible">
                 <div>{{ $message }}</div>
@@ -95,12 +106,42 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+    <div class="col-md-8">
+        <form action="{{ url('/servicos') }}" method="GET" class="d-flex align-items-center justify-content-between">
+            <!-- Filtro de Status -->
+            <div class="d-flex align-items-center me-3">
+                <label for="status" class="form-label me-2">Status:</label>
+                <select name="status" id="status" class="form-select w-auto">
+                    <option value="">Todos os Status</option>
+                    <option value="Em analise" {{ request('status') == 'Em analise' ? 'selected' : '' }}>Em Análise</option>
+                    <option value="Em Andamento" {{ request('status') == 'Em Andamento' ? 'selected' : '' }}>Em Andamento</option>
+                    <option value="Concluído" {{ request('status') == 'Concluído' ? 'selected' : '' }}>Concluído</option>
+                </select>
+            </div>
             
-            @if(session('service_id'))
-    <div class="col mt-3">
-        <a class="btn btn-danger" href="{{ route('servicos.gerar-pdf', session('service_id')) }}">Gerar relatório do serviço criado</a>
+            <!-- Filtro de Nome do Cliente -->
+            <div class="d-flex align-items-center me-3">
+                <label for="cliente" class="form-label me-2">Cliente:</label>
+                <input type="text" name="cliente" id="cliente" class="form-control w-auto" placeholder="Nome do Cliente" value="{{ request('cliente') }}">
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex align-items-center">
+    <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+    <a href="{{ url('/servicos') }}" class="btn btn-warning d-inline-block">Limpar Filtros</a>
+</div>
+
+        </form>
     </div>
-@endif
+</div>
+
+            <div class="col">
+    <h5>Total de lucro: <span class="badge bg-primary">R$ {{ number_format($totalCusto, 2, ',', '.') }}</span></h5>
+</div>
+
+
+
 
             <div class="row">
                 <div class="col">
@@ -130,11 +171,16 @@
                                 <td class="col-defeito">{!! nl2br(e($servicos['defeito'])) !!}</td>
                                 <td>{{ $servicos['status'] }}</td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <a class="btn btn-primary" href="{{ url('/servicos/editar', ['id' => $servicos['id']]) }}">Editar</a>
-                                        <a onclick="funConfirma(this)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger" href="{{ url('/servicos/delete', ['id' => $servicos['id']]) }}">Excluir</a>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            ⋮
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="{{ url('/servicos/editar', ['id' => $servicos['id']]) }}">Editar</a></li>
+                                            <li><a class="dropdown-item" onclick="funConfirma(this)" data-bs-toggle="modal" data-bs-target="#exampleModal" href="{{ url('/servicos/delete', ['id' => $servicos['id']]) }}">Excluir</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('servicos.gerar-pdf', ['id' => $servicos->id]) }}">Gerar PDF</a></li>
+                                        </ul>
                                     </div>
-                                    
                                 </td>
 
                                 </td>
@@ -146,7 +192,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-secondary float-end" href="{{ url('/dashboardGer') }}">Voltar</a>
+                    <a class="btn btn-secondary float-end" href="{{ url('/dashboard') }}">Voltar</a>
                 </div>
             </div>
             <div class="col">

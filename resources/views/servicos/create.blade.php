@@ -110,11 +110,7 @@
                         <button class="btn btn-primary" type="submit">Salvar</button>
                     </div>
 
-                    @if(session('service_id'))
-    <div class="col mt-3">
-        <a class="btn btn-danger" href="{{ route('servicos.gerar-pdf', session('service_id')) }}">Gerar PDF</a>
-    </div>
-@endif
+  
                 </div>
             </form>
         </div>

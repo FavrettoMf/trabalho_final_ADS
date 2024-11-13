@@ -91,7 +91,7 @@ body {
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-secondary float-end" href="{{ url('/dashboardGer') }}">Voltar</a>
+                    <a class="btn btn-secondary float-end" href="{{ url('/dashboard') }}">Voltar</a>
                 </div>
             </div>
         </div>

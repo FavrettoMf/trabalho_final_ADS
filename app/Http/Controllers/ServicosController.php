@@ -11,17 +11,34 @@ use Illuminate\Http\Request;
 
 class ServicosController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        // Obtém todos os serviços e carrega as relações necessárias
-        $servicos = Servicos::with(['veiculos', 'tipo_servicos'])->get();
-
-        // Contadores de sericos concluidos
+        // Filtrar os serviços conforme os parâmetros passados (status, cliente)
+        $servicos = Servicos::with('veiculos.clientes', 'tipo_servicos')
+            ->when($request->status, function ($query) use ($request) {
+                return $query->where('status', $request->status);
+            })
+            ->when($request->cliente, function ($query) use ($request) {
+                return $query->whereHas('veiculos.clientes', function ($query) use ($request) {
+                    $query->where('nome', 'like', '%' . $request->cliente . '%');
+                });
+            })
+            
+            ->get();
+    
+        // Calcular o total do custo médio
+        $totalCusto = $servicos->sum(function ($servico) {
+            return $servico->tipo_servicos->custo_medio;
+        });
+    
+        // Contar os serviços concluídos
         $countConcluido = $servicos->where('status', 'Concluído')->count();
-
-        return view('servicos.index', compact('servicos',  'countConcluido'));
+    
+        // Passar as variáveis para a view
+        return view('servicos.index', compact('servicos', 'totalCusto', 'countConcluido'));
     }
+
+    
     public function gerarPdf($id)
     {
         // Busca o serviço pelo ID

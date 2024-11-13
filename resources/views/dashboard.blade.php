@@ -4,16 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            background-color: #f4f7fa;
-            color: #333;
+            background-color: #eef2f7;
             font-family: Arial, sans-serif;
+            color: #333;
             margin: 0;
         }
 
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #495057, #343a40);
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            color: #f8f9fa;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #f8f9fa;
+        }
+
+        .nav-link:hover {
+            color: #ced4da;
+            background-color: transparent;
+        }
+
+        /* Background Image */
         .background-image {
             position: fixed;
             top: 0;
@@ -21,161 +44,216 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(37%);
-            /* Deixa a imagem um pouco mais apagada */
-            z-index: -2;
-            /* Garante que a imagem esteja atrás da sobreposição e do conteúdo */
+            filter: brightness(35%);
+            z-index: -1;
         }
 
+        /* Main Content */
         .content-container {
             position: relative;
-            max-width: 1300px;
-            margin: 90px auto;
+            max-width: 900px;
+            margin: 150px auto;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
+            animation: fadeIn 1s ease-out;
         }
 
-        .card {
-            margin: 22px auto;
-            border: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: scale(1.10);
-        }
-
-        .card-img-top {
-            height: 220px;
-            object-fit: cover;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-        }
-
-        .navbar-brand {
-            font-size: 1.9rem;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .nav-link {
-            color: #fff;
-            font-size: 1.4rem;
-        }
-
-        .nav-link:hover {
-            color: #ddd;
+        .content-container h1 {
+            color: #343a40;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
         .btn-primary {
             background-color: #007bff;
             border: none;
-            padding: 10px 90px;
+            padding: 12px 35px;
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 500;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border-radius: 30px;
+            text-transform: uppercase;
         }
 
+        .btn-primary:hover {
+            background-color: #0056b3;
+            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.5);
+        }
 
-        .card-title {
-            font-size: 1.4rem;
+        /* Sidebar Button */
+        .sidebar-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-btn:hover {
+            color: #0056b3;
+        }
+
+        /* Hidden Menu */
+        .hidden-menu {
+            display: none;
+            margin-top: 20px;
+            transition: max-height 0.4s ease;
+            overflow: hidden;
+        }
+
+        .hidden-menu a {
+            display: block;
+            padding: 12px 0;
+            color: #007bff;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding-left: 20px;
+            border-left: 5px solid transparent;
+        }
+
+        .hidden-menu a:hover {
+            color: #0056b3;
+            border-color: #007bff;
+        }
+
+        /* Clock */
+        .clock {
+            font-size: 2.5rem;
+            color: #495057;
             font-weight: bold;
+            margin-top: 30px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #495057;
+            color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Panel */
+        .panel {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .panel h2 {
+            font-size: 1.8rem;
+            color: #343a40;
             margin-bottom: 20px;
         }
 
-        .certificacao {
-            background-color: #282c34;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        .panel .panel-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #495057;
         }
 
-        .certificacao p {
-            margin: 0;
-            font-size: 1rem;
+        .panel .panel-item span {
+            font-weight: bold;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-light">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Gerenciamento Automotivo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://www.youtube.com/@matheusfavretto6442" target="_blank">
-                            <i class="fab fa-youtube"></i> YouTube
-                        </a>
-                    </li>
+            <a class="navbar-brand" href="{{ url('/dashboard') }}">Gerenciamento Automotivo</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-light ms-3" href="{{ url('/') }}">Sair</a>
                     </li>
                 </ul>
             </div>
         </div>
+        
     </nav>
 
     <img src="https://blog.simplusbr.com/wp-content/uploads/2020/09/oficina-mecanica-organizada.jpg" alt="Imagem de Fundo" class="background-image">
-    <div class="background-overlay"></div>
 
+    <!-- Conteúdo Principal -->
     <div class="content-container">
-        <h1 class="dashboard-title">Gerenciamento Automotivo</h1>
-        <div class="row justify-content-center">
-            <!-- Card 1: Lista de Clientes -->
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card text-center">
-                    <img src="https://blog.usadosbr.com/wp-content/uploads/2016/06/oficina_mecanica_2.jpg.jpeg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Lista de Clientes</h5>
-                        <a href="{{ url('/clientes') }}" class="btn btn-primary">Acessar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2: Lista de Serviços -->
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card text-center">
-                    <img src="https://automecanicafroes.com.br/wp-content/uploads/2024/03/Captura-de-tela-2024-03-25-160647.png" class="card-img-top" alt="Imagem do cartão">
-                    <div class="card-body">
-                        <h5 class="card-title">Lista de Veículos</h5>
-                        <a href="{{ url('/veiculos') }}" class="btn btn-primary">Acessar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3: Gerenciar Veículos e Serviços -->
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                <div class="card text-center">
-                    <img src="https://play-lh.googleusercontent.com/zAboa4aVE6Ix_c8Lae_5SfY-eI3dpOdJnj8amk-HyRFjnCDSaBRCJCOmySeteE4fAyg" class="card-img-top" alt="Imagem do cartão">
-                    <div class="card-body">
-                        <h5 class="card-title">Gerenciamento</h5>
-                        <a href="{{ url('/dashboardGer') }}" class="btn btn-primary">Acessar</a>
-                    </div>
-                </div>
-            </div>
+        <h1>GERENCIAMENTO AUTOMOTIVO</h1>
+        <a href="{{ url('/servicos') }}" class="btn btn-primary"> Serviços</a>
+
+        <!-- Clock -->
+        <div class="clock" id="clock">00:00:00</div>
+
+        <!-- Informações de Painel -->
+       
+
+        
+
+        <!-- Botão para Exibir Mais Opções -->
+        <div class="sidebar-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i> Mais Opções
+        </div>
+
+        <!-- Menu Oculto -->
+        <div class="hidden-menu" id="hiddenMenu">
+            <a href="{{ url('/clientes') }}"><i class="fas fa-users"></i> Clientes</a>
+            <a href="{{ url('/veiculos') }}"><i class="fas fa-car"></i> Veículos</a>
+            <a href="{{ url('/tipo_servicos') }}"><i class="fas fa-wrench"></i> Serviços oferecidos</a>
         </div>
     </div>
 
-    <!-- Certificação -->
-    <section class="certificacao">
-        <div class="container">
-            <p class="mb-0">&copy; 2024 Gerenciamento Automotivo. Todos os direitos reservados.</p>
-        </div>
-    </section>
+    
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+NfW7N0C5N5G1c5F5F5s0G5K0L5N5F5" crossorigin="anonymous"></script>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Gerenciamento Automotivo. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Relógio ao vivo
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+
+        // Função de alternância do menu
+        function toggleMenu() {
+            const menu = document.getElementById('hiddenMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </body>
 
 </html>

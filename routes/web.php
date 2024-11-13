@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\VeiculosController;
 use App\Http\Controllers\ProfileController;
@@ -70,6 +72,8 @@ Route::get('/clientes/{id}/veiculos', [ClientesController::class, 'getVeiculos']
 
 Route::get('/servicos/{id}/gerar-pdf', [ServicosController::class, 'gerarPdf'])->name('servicos.gerar-pdf');
 
+Route::get('register', [RegisteredUserController::class, 'create']);
+Route::post('register', [RegisteredUserController::class, 'store']);
 
 
 Route::post('/servicos/editar/', [ServicosController::class, 'update']);
