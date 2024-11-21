@@ -13,7 +13,7 @@ class ServicosController extends Controller
 {
     public function index(Request $request)
     {
-        // Filtrar os serviços conforme os parâmetros passados (status, cliente)
+        // Filtrar os serviços conforme os parâmetros passados (status, cliente, datas)
         $servicos = Servicos::with('veiculos.clientes', 'tipo_servicos')
             ->when($request->status, function ($query) use ($request) {
                 return $query->where('status', $request->status);
@@ -23,11 +23,17 @@ class ServicosController extends Controller
                     $query->where('nome', 'like', '%' . $request->cliente . '%');
                 });
             })
-            
+            ->when($request->data_inicial, function ($query) use ($request) {
+                return $query->whereDate('created_at', '>=', $request->data_inicial);
+            })
+            ->when($request->data_final, function ($query) use ($request) {
+                return $query->whereDate('created_at', '<=', $request->data_final);
+            })
+            ->orderBy('created_at', 'desc') // Ordenar pelos mais recentes primeiro
             ->get();
     
-        // Calcular o total do custo médio
-        $totalCusto = $servicos->sum(function ($servico) {
+        // Calcular o total de custo médio apenas dos serviços concluídos
+        $totalCustoConcluido = $servicos->where('status', 'Concluído')->sum(function ($servico) {
             return $servico->tipo_servicos->custo_medio;
         });
     
@@ -35,8 +41,10 @@ class ServicosController extends Controller
         $countConcluido = $servicos->where('status', 'Concluído')->count();
     
         // Passar as variáveis para a view
-        return view('servicos.index', compact('servicos', 'totalCusto', 'countConcluido'));
+        return view('servicos.index', compact('servicos', 'totalCustoConcluido', 'countConcluido'));
     }
+    
+    
 
     
     public function gerarPdf($id)
@@ -80,7 +88,7 @@ class ServicosController extends Controller
     // Armazena o ID do serviço na sessão para ser usado na geração do PDF
     session(['service_id' => $servico->id]);
 
-    return redirect('/servicos')->with('success', 'Serviço salvo com sucesso');
+    return redirect('/servicos')->with('success', 'Serviço criado com sucesso');
 }
 
 

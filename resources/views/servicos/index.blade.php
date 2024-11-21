@@ -33,15 +33,15 @@
 
     .content-container {
         position: relative;
-        max-width: 1600px;
+        max-width: 1800px;
         margin: 0 auto;
         /* Remove margem superior para evitar espaço branco */
-        padding: 20px;
+        padding: 15px;
         background: rgba(255, 255, 255, 0.8);
         /* Fundo semi-transparente */
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        margin-top: 50px;
+        margin-top: 30px;
         /* Adiciona espaço superior para que o conteúdo não fique grudado no topo */
     }
 
@@ -73,9 +73,17 @@
     }
 
     .dropdown .btn {
-    padding: 5px;
-    font-size: 1.2em; /* Tamanho dos pontinhos */
-}
+        padding: 5px;
+        font-size: 1.2em;
+        /* Tamanho dos pontinhos */
+    }
+
+    .col h5 {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        /* Espaçamento entre elementos */
+    }
 </style>
 
 <!-- Imagem de fundo -->
@@ -89,6 +97,18 @@
     <div class="card">
         <div class="card-header">
             <h2>Lista de Serviços</h2>
+
+            <div class="col">
+                <h5>
+                    Serviços concluídos: <span class="badge bg-success">{{ $countConcluido }}</span>
+                    Renda estimada de: <span class="badge bg-primary">R$ {{ number_format($totalCustoConcluido, 2, ',', '.') }}</span>
+                </h5>
+            </div>
+
+            <div class="col">
+                <a class="btn btn-success float-end" href="{{ url('/servicos/novo') }}">Cadastrar Novo Serviço</a>
+            </div>
+
         </div>
 
         <div class="card-body">
@@ -100,48 +120,62 @@
             </div>
             @endif
 
-            <div class="row">
-                <div class="col">
-                    <a class="btn btn-success float-end" href="{{ url('/servicos/novo') }}">Cadastrar Novo Serviço</a>
+
+            <!-- Botão para abrir o modal -->
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#filtroModal">
+                <i class="fas fa-filter"></i> Filtros
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="filtroModal" tabindex="-1" aria-labelledby="filtroModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="filtroModalLabel">Filtrar Serviços</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url('/servicos') }}" method="GET">
+                                <!-- Filtro de Status -->
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status:</label>
+                                    <select name="status" id="status" class="form-select">
+                                        <option value="">Todos os Status</option>
+                                        <option value="Em analise" {{ request('status') == 'Em analise' ? 'selected' : '' }}>Em Análise</option>
+                                        <option value="Em Andamento" {{ request('status') == 'Em Andamento' ? 'selected' : '' }}>Em Andamento</option>
+                                        <option value="Concluído" {{ request('status') == 'Concluído' ? 'selected' : '' }}>Concluído</option>
+                                    </select>
+                                </div>
+
+                                <!-- Filtro de Nome do Cliente -->
+                                <div class="mb-3">
+                                    <label for="cliente" class="form-label">Cliente:</label>
+                                    <input type="text" name="cliente" id="cliente" class="form-control" placeholder="Nome do Cliente" value="{{ request('cliente') }}">
+                                </div>
+
+                                <!-- Filtro por Data de Criação -->
+                                <div class="mb-3">
+                                    <label for="data_inicial" class="form-label">De:</label>
+                                    <input type="date" name="data_inicial" id="data_inicial" class="form-control" value="{{ request('data_inicial') }}">
+
+                                    <label for="data_final" class="form-label">Até:</label>
+                                    <input type="date" name="data_final" id="data_final" class="form-control" value="{{ request('data_final') }}">
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-filter"></i> Aplicar Filtros
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="row mb-3">
-    <div class="col-md-8">
-        <form action="{{ url('/servicos') }}" method="GET" class="d-flex align-items-center justify-content-between">
-            <!-- Filtro de Status -->
-            <div class="d-flex align-items-center me-3">
-                <label for="status" class="form-label me-2">Status:</label>
-                <select name="status" id="status" class="form-select w-auto">
-                    <option value="">Todos os Status</option>
-                    <option value="Em analise" {{ request('status') == 'Em analise' ? 'selected' : '' }}>Em Análise</option>
-                    <option value="Em Andamento" {{ request('status') == 'Em Andamento' ? 'selected' : '' }}>Em Andamento</option>
-                    <option value="Concluído" {{ request('status') == 'Concluído' ? 'selected' : '' }}>Concluído</option>
-                </select>
-            </div>
-            
-            <!-- Filtro de Nome do Cliente -->
-            <div class="d-flex align-items-center me-3">
-                <label for="cliente" class="form-label me-2">Cliente:</label>
-                <input type="text" name="cliente" id="cliente" class="form-control w-auto" placeholder="Nome do Cliente" value="{{ request('cliente') }}">
-            </div>
-
-            <!-- Botões -->
-            <div class="d-flex align-items-center">
-    <button type="submit" class="btn btn-primary me-2">Filtrar</button>
-    <a href="{{ url('/servicos') }}" class="btn btn-warning d-inline-block">Limpar Filtros</a>
-</div>
-
-        </form>
-    </div>
-</div>
-
-            <div class="col">
-    <h5>Total de lucro: <span class="badge bg-primary">R$ {{ number_format($totalCusto, 2, ',', '.') }}</span></h5>
-</div>
-
-
-
+            <a href="{{ url('/servicos') }}" class="btn btn-warning">
+                <i class="fas fa-times-circle"></i> Limpar Filtros
+            </a>
 
             <div class="row">
                 <div class="col">
@@ -156,6 +190,7 @@
                                 <th>Custo Médio</th>
                                 <th>Defeito</th>
                                 <th>Status</th>
+                                <th>Data de Criação</th> <!-- Nova coluna -->
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -170,6 +205,7 @@
                                 <td>R$ {{ number_format($servicos->tipo_servicos['custo_medio'], 2, ',', '.') }}</td>
                                 <td class="col-defeito">{!! nl2br(e($servicos['defeito'])) !!}</td>
                                 <td>{{ $servicos['status'] }}</td>
+                                <td>{{ \Carbon\Carbon::parse($servicos['created_at'])->format('d/m/Y') }}</td> <!-- Exibição formatada -->
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -182,11 +218,10 @@
                                         </ul>
                                     </div>
                                 </td>
-
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -194,9 +229,6 @@
                 <div class="col">
                     <a class="btn btn-secondary float-end" href="{{ url('/dashboard') }}">Voltar</a>
                 </div>
-            </div>
-            <div class="col">
-                <h5>Serviços Concluídos: <span class="badge bg-success">{{ $countConcluido }}</span></h5>
             </div>
         </div>
     </div>
