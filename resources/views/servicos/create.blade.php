@@ -103,7 +103,7 @@
                     </select>
 
                     <div class="col">
-                        <a class="btn btn-secondary" href="{{ url('/servicos') }}">Voltar</a>
+                        <a class="btn btn-secondary" href="{{ url('/dashboard') }}">Voltar</a>
                     </div>
 
                     <div class="col">

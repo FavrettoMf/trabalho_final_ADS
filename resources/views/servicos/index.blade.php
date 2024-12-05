@@ -105,9 +105,7 @@
                 </h5>
             </div>
 
-            <div class="col">
-                <a class="btn btn-success float-end" href="{{ url('/servicos/novo') }}">Cadastrar Novo Serviço</a>
-            </div>
+           
 
         </div>
 

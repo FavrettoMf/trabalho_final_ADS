@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recuperação de Senha</title>
+  <title>Redefinir Senha</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
@@ -123,34 +123,39 @@
 <body>
   <div class="background-image">
     <div class="container">
-      <h2 class="text-center text-3xl font-bold mb-6 text-indigo-600">Recuperação de Senha</h2>
-      <form id="resetForm" class="space-y-6">
-        <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
-          <input type="text" id="name" name="name" placeholder="Digite seu nome" required
+      <h2 class="text-center text-3xl font-bold mb-6 text-indigo-600">Redefinir Senha</h2>
+      <form id="resetPasswordForm" class="space-y-6">
+      <div>
+          <label for="newPassword" class="block text-sm font-medium text-gray-700">Senha atual</label>
+          <input type="password" name="newPassword" placeholder="Digite sua nova senha" required
                  class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-          <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required
+          <label for="newPassword" class="block text-sm font-medium text-gray-700">Nova Senha</label>
+          <input type="password" id="newPassword" name="newPassword" placeholder="Digite sua nova senha" required
                  class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
         </div>
-        <button type="submit" id="submitBtn" class="form-button">Enviar</button>
+        <div>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmar Senha</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme sua nova senha" required
+                 class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <button type="submit" id="submitBtn" class="form-button">Redefinir Senha</button>
       </form>
-      <div id="message" class="message">E-mail enviado com sucesso!</div>
+      <div id="message" class="message">Senha redefinida com sucesso!</div>
 
       <!-- Mensagem e contador de retry -->
       <div id="retryMessage" class="retry-message">
-        Se você não recebeu o e-mail, tente novamente após <span id="countdown" class="countdown">30</span> segundos.
+        
       </div>
 
       <!-- Botão de voltar para login -->
-      <button onclick="window.location.href='/'" class="back-button">Voltar para Login</button>
+      <button onclick="window.location.href='/dashboard'" class="back-button">Voltar para tela principar</button>
     </div>
   </div>
 
   <script>
-    const form = document.getElementById('resetForm');
+    const form = document.getElementById('resetPasswordForm');
     const message = document.getElementById('message');
     const retryMessage = document.getElementById('retryMessage');
     const countdown = document.getElementById('countdown');
@@ -158,6 +163,15 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Verifica se as senhas coincidem
+      if (newPassword !== confirmPassword) {
+        alert('As senhas não coincidem!');
+        return;
+      }
 
       // Exibe a mensagem de sucesso
       message.classList.add('show');

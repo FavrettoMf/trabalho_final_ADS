@@ -85,6 +85,9 @@
                         </span>
                     </x-primary-button>
                 </div>
+                <div class="mt-4 text-center">
+                    <a href="dashboardGer" class="text-sm text-blue-500 hover:underline">Esqueceu sua senha?</a>
+                </div>
 
                 <!-- Link para registro -->
                 <p class="text-center text-sm text-gray-600 mt-4">

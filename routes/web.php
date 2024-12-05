@@ -33,6 +33,10 @@ Route::get('/dashboardGer', function () {
     return view('dashboardGer');
 });
 
+Route::get('/redefinir', function () {
+    return view('redefinir');
+});
+
 
 Route::get('/clientes', [ClientesController::class, 'index']);
 Route::get('/clientes/novo', [ClientesController::class, 'create']);

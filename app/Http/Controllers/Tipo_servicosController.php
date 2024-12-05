@@ -57,6 +57,8 @@ class Tipo_servicosController extends Controller
 
     }
 
+    
+
     public function update(Request $request)
     {
         //find é o método que faz select * from clientes where id= ?
